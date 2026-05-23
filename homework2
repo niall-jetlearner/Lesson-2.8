@@ -1,0 +1,84 @@
+import pygame
+
+
+pygame.init()
+
+
+WIDTH, HEIGHT = 800, 600
+screen = pygame.display.set_mode((WIDTH, HEIGHT))
+pygame.display.set_caption("Four Direction Movement")
+
+
+player = pygame.image.load("character.png").convert_alpha()
+
+
+player_width = player.get_width()
+player_height = player.get_height()
+
+x = WIDTH // 2
+y = HEIGHT // 2
+speed = 5
+
+
+keys = [False, False, False, False]
+
+clock = pygame.time.Clock()
+running = True
+
+while running:
+    for event in pygame.event.get():
+
+        if event.type == pygame.QUIT:
+            running = False
+
+        
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_UP:
+                keys[0] = True
+            if event.key == pygame.K_DOWN:
+                keys[1] = True
+            if event.key == pygame.K_LEFT:
+                keys[2] = True
+            if event.key == pygame.K_RIGHT:
+                keys[3] = True
+
+        
+        if event.type == pygame.KEYUP:
+            if event.key == pygame.K_UP:
+                keys[0] = False
+            if event.key == pygame.K_DOWN:
+                keys[1] = False
+            if event.key == pygame.K_LEFT:
+                keys[2] = False
+            if event.key == pygame.K_RIGHT:
+                keys[3] = False
+
+    
+    if keys[0]:  
+        y -= speed
+    if keys[1]:  
+        y += speed
+    if keys[2]:
+        x -= speed
+    if keys[3]: 
+        x += speed
+
+    
+    if x < 0:
+        x = 0
+    if x > WIDTH - player_width:
+        x = WIDTH - player_width
+
+    if y < 0:
+        y = 0
+    if y > HEIGHT - player_height:
+        y = HEIGHT - player_height
+
+    
+    screen.fill((30, 30, 30))
+    screen.blit(player, (x, y))
+
+    pygame.display.update()
+    clock.tick(60)
+
+pygame.quit()

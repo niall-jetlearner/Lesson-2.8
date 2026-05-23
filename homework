@@ -1,0 +1,50 @@
+pygame.init()
+
+
+WIDTH, HEIGHT = 800, 600
+screen = pygame.display.set_mode((WIDTH, HEIGHT))
+pygame.display.set_caption("Move Up Only")
+
+
+player = pygame.image.load("character.png").convert_alpha()
+
+
+x = WIDTH // 2
+y = HEIGHT // 2
+
+
+speed = 5
+move_up = False
+
+clock = pygame.time.Clock()
+running = True
+
+while running:
+    
+    for event in pygame.event.get():
+
+        if event.type == pygame.QUIT:
+            running = False
+
+        
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_UP:
+                move_up = True
+
+        
+        if event.type == pygame.KEYUP:
+            if event.key == pygame.K_UP:
+                move_up = False
+
+    
+    if move_up:
+        y -= speed
+
+    
+    screen.fill((30, 30, 30))
+    screen.blit(player, (x, y))
+
+    pygame.display.update()
+    clock.tick(60)
+
+pygame.quit()
